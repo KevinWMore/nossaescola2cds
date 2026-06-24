@@ -1,168 +1,304 @@
-*{
-margin: 0;
-padding: 0;
-box-sizing: border-box;
+/* CONFIGURAÇÕES GERAIS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
-body{
-font-family: "Poppins", sans-serif;
+
+body {
+    font-family: "Poppins", sans-serif;
+    background-color: #1a0933; /* Fundo geral do site Roxo Escuro */
+    color: #ffffff;
+    overflow-x: hidden;
 }
+
+/* HEADER / TOPO DO SITE */
 header {
-    background-color: #2b1055; /* Roxo Escuro */
-    color: #fff;
+    background-color: #2b1055; /* Roxo Intermediário */
+    color: white;
     width: 100%;
     padding: 20px;
+    border-bottom: 4px solid #ff7b00; /* Linha divisória Laranja */
 }
 
-.estudante {
-    background-color: #ff7b00; /* Laranja Vibrante */
-    padding: 24px 0;
+.cabecalho-itens {
+    max-width: 1980px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-/* Títulos chamativos */
-.titulo_site, .estudante_titulo {
-    color: #ff9e00; /* Laranja Claro */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+.cabecalho_imagem {
+    width: 80px;
+    height: auto;
+    transition: transform 0.3s;
 }
 
-.escola {
-    background-image: linear-gradient(#2b1055, #591a75); /* Gradiente Roxo */
-    color: white;
-    padding: 24px 0;
+.cabecalho_imagem:hover {
+    transform: rotate(360deg); /* Efeito dinâmico na logo */
+}
+
+.titulo-container {
     text-align: center;
-    display: block;
-}
-.cabecalho-imagem{
-width: 10%;
-display: flex;
-justify-content: flex-start;
-align-items: center;
-}
-.titulo_site{
-padding: 50px;
-text-align: center;
-width: 50%;
-font: 30px;
-}
-.sociais{
-display: flex;
-justify-content: flex-end;
-width: 25%;
-padding-right: 30px;
-}
-.banner1{
-display: flex;
-justify-content: center;
-}
-.estudante_titulo{
-padding: 50px;
-text-align: center;
-
-}
-.estudante-nome{
-text-align: center;
-}
-.estudante-imagem{
-width: 120px;
-}
-.estudante-icone{
-width: 38px;
-padding: 4px 8px;
-}
-.estudante{
-background-image: background-color(#faae43);
-padding: 24px 0;
+    flex-grow: 1;
 }
 
-.estudante.div{
-text-align: center;
-padding: 24px 0;
-}
-.estudantes_todos{
-display: flex;
-justify-content: space-around;
-}
-.escola{
-background-image: linear-gradient(#40A2E3,#7FC2EF);
-color: white;
-display: flex;
-justify-content:center;
-padding: 24px 0;
-text-align:center;
-display:block;
-}
-.escola-titulo{
-padding: 50px;
-text-align: center;
-}
-.logo_rodape{
-height: 80px;
-padding: 12px 0;
-
+.titulo_site {
+    font-size: 32px;
+    color: #ff7b00; /* Título Laranja */
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
 }
 
-.link{
-color: #ffffff;
-text-decoration: none;
+.saudacao-texto {
+    font-size: 16px;
+    color: #ff9e00;
+    margin-top: 5px;
+    font-weight: 300;
 }
 
-.estudante-div {
-    text-align: center;
-    padding: 24px 16px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-radius: 8px;
+.sociais {
+    display: flex;
+    gap: 15px;
 }
 
-.estudante-div:hover {
-    transform: translateY(-10px); /* Faz o card "flutuar" */
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Adiciona uma sombra leve */
-    background-color: rgba(255, 255, 255, 0.1); /* Um fundo sutil */
-}
-
-/* Efeito nos ícones das redes sociais */
-.sociais img, .estudante-icone {
-    transition: transform 0.2s ease, filter 0.2s ease;
+.sociais img {
+    width: 35px;
     cursor: pointer;
+    transition: transform 0.2s, filter 0.2s;
 }
 
-.sociais img:hover, .estudante-icone:hover {
-    transform: scale(1.2); /* Aumenta o ícone em 20% */
-    filter: brightness(1.2); /* Deixa o ícone levemente mais brilhante */
+.sociais img:hover {
+    transform: scale(1.2) translateY(-3px);
+    filter: brightness(1.3);
 }
 
+/* BANNER */
+.banner1 {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    background-color: #1a0933;
+}
+
+.escola-image {
+    max-width: 100%;
+    height: auto;
+}
+
+/* SEÇÃO DO JOGO LAUNCHPAD */
 .secao-musical {
-    background-color: #1a0933; /* Roxo quase preto */
-    padding: 40px 20px;
-}
-.titulo-musica {
+    background-color: #150529; /* Roxo bem profundo */
+    padding: 50px 20px;
     text-align: center;
+    border-bottom: 4px solid #ff7b00;
+}
+
+.titulo-musica {
     color: #ff7b00;
+    font-size: 26px;
     margin-bottom: 10px;
 }
+
 .launchpad {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    flex-wrap: wrap;
+    gap: 20px;
     max-width: 600px;
-    margin: 0 auto;
+    margin: 20px auto 0 auto;
 }
+
 .pad {
-    width: 100px;
-    height: 100px;
-    background-color: #591a75;
+    width: 110px;
+    height: 110px;
+    background-color: #3d1875;
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
-    border-radius: 12px;
+    font-size: 14px;
+    border-radius: 16px;
     cursor: pointer;
     transition: all 0.1s ease;
     border: 3px solid #ff7b00;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    user-select: none;
 }
-/* Efeito quando o JavaScript ativa o clique */
+
+.pad:hover {
+    background-color: #522299;
+    border-color: #ff9e00;
+}
+
+/* Estado ativo disparado pelo Clique do JS */
 .pad.ativo {
     background-color: #ff9e00;
-    transform: scale(0.9);
-    box-shadow: 0 0 20px #ff9e00;
+    transform: scale(0.92);
+    box-shadow: 0 0 25px #ff9e00;
     color: #1a0933;
+}
+
+/* SEÇÃO CARDS (ANTIGOS ESTUDANTES) */
+.estidante_titulo {
+    padding: 40px 0 20px 0;
+    text-align: center;
+    color: #2b1055;
+    font-size: 28px;
+}
+
+.estudante {
+    background-color: #ff7b00; /* Fundo Laranja */
+    padding: 40px 20px;
+    color: #2b1055;
+}
+
+.estudantes_todos {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 20px;
+}
+
+.estudante-div {
+    background-color: rgba(43, 16, 85, 0.1); /* Sombra sutil de roxo */
+    text-align: center;
+    padding: 25px;
+    border-radius: 12px;
+    width: 280px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s;
+}
+
+/* EFEITO DINÂMICO INTERATIVO DO MOUSE */
+.estudante-div:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.estudante-imagem {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #2b1055;
+    margin-bottom: 15px;
+}
+
+.estudante-nome {
+    font-size: 20px;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.icones-redes {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.estudante-icone {
+    width: 35px;
+    height: 35px;
+    transition: transform 0.2s;
+}
+
+.estudante-icone:hover {
+    transform: scale(1.25);
+}
+
+/* RODAPÉ */
+.escola {
+    background-image: linear-gradient(#2b1055, #150529); /* Gradiente Roxo */
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+    border-top: 4px solid #ff7b00;
+}
+
+.escola-titulo {
+    font-size: 22px;
+    margin: 15px 0;
+    color: #ff9e00;
+}
+
+.logo_rodape {
+    height: 80px;
+    margin-bottom: 10px;
+}
+
+.link {
+    color: #ff7b00;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s;
+}
+
+.link:hover {
+    color: #ff9e00;
+    text-decoration: underline;
+}
+
+.escola p {
+    font-size: 13px;
+    opacity: 0.7;
+    margin-top: 15px;
+}
+
+/* POP-UP (ESTRUTURA MODAL) */
+.popup-oculto {
+    display: none; /* Inicia oculto, JS muda para flex */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.popup-conteudo {
+    background-color: #2b1055;
+    border: 3px solid #ff7b00;
+    color: white;
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 450px;
+    box-shadow: 0 0 30px rgba(255, 123, 0, 0.6);
+}
+
+.popup-conteudo h3 {
+    color: #ff7b00;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.popup-conteudo p {
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.popup-conteudo button {
+    background-color: #ff7b00;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    margin-top: 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.popup-conteudo button:hover {
+    background-color: #ff9e00;
+    transform: scale(1.05);
 }
