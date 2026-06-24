@@ -6,18 +6,30 @@ box-sizing: border-box;
 body{
 font-family: "Poppins", sans-serif;
 }
-header{
-background-color: #424e61;
-color: white;
-width: 100%;
-padding: 20px;
+header {
+    background-color: #2b1055; /* Roxo Escuro */
+    color: #fff;
+    width: 100%;
+    padding: 20px;
 }
-.cabecalho-itens{
-max-width: 1980px;
-margin: 0 auto;
-display: flex;
-align-items: center;
-justify-content: center;
+
+.estudante {
+    background-color: #ff7b00; /* Laranja Vibrante */
+    padding: 24px 0;
+}
+
+/* Títulos chamativos */
+.titulo_site, .estudante_titulo {
+    color: #ff9e00; /* Laranja Claro */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.escola {
+    background-image: linear-gradient(#2b1055, #591a75); /* Gradiente Roxo */
+    color: white;
+    padding: 24px 0;
+    text-align: center;
+    display: block;
 }
 .cabecalho-imagem{
 width: 10%;
@@ -116,3 +128,4 @@ text-decoration: none;
     transform: scale(1.2); /* Aumenta o ícone em 20% */
     filter: brightness(1.2); /* Deixa o ícone levemente mais brilhante */
 }
+
