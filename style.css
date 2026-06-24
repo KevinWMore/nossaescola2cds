@@ -302,3 +302,46 @@ header {
     background-color: #ff9e00;
     transform: scale(1.05);
 }
+.secao-video {
+    padding: 40px 20px;
+    text-align: center;
+    background-color: #1a0933;
+}
+.video-container {
+    max-width: 560px;
+    margin: 0 auto;
+    position: relative;
+    padding-bottom: 31.25%; /* Proporção 16:9 */
+    height: 0;
+    overflow: hidden;
+    border: 3px solid #ff7b00;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(255, 123, 0, 0.4);
+}
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.vinil-container {
+    text-align: center;
+    padding: 30px;
+    background-color: #150529;
+}
+.vinil {
+    width: 150px;
+    height: 150px;
+    transition: transform 0.5s ease;
+    cursor: pointer;
+}
+/* Quando passa o mouse, cria uma animação infinita de rotação */
+.vinil:hover {
+    animation: girarVinil 3s linear infinite;
+}
+
+@keyframes girarVinil {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
