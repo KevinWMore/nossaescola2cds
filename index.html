@@ -195,5 +195,25 @@ href="https://wa.me/5541999999999"> 41 9.9999-9999 </a></h2>
 Política de Privacidade | Proteção de dados | Encarregado de dados</p>
 <p> </p>
 </footer>
+<script>
+    function gerirSaudacao() {
+        const agora = new Date();
+        const hora = agora.getHours();
+        let saudacao = "";
+
+        if (hora >= 5 && hora < 12) {
+            saudacao = "🌅 Bom dia! Seja bem-vindo ao meu espaço.";
+        } else if (hora >= 12 && hora < 18) {
+            saudacao = "☀️ Boa tarde! Que bom ver você por aqui.";
+        } else {
+            saudacao = "🌙 Boa noite! Obrigado pela visita.";
+        }
+
+        document.getElementById("saudacao").innerText = saudacao;
+    }
+
+    // Executa a função assim que a página carrega
+    window.onload = gerirSaudacao;
+</script>
 </body>
 </html>
