@@ -92,3 +92,27 @@ padding: 12px 0;
 color: #ffffff;
 text-decoration: none;
 }
+
+.estudante-div {
+    text-align: center;
+    padding: 24px 16px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-radius: 8px;
+}
+
+.estudante-div:hover {
+    transform: translateY(-10px); /* Faz o card "flutuar" */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); /* Adiciona uma sombra leve */
+    background-color: rgba(255, 255, 255, 0.1); /* Um fundo sutil */
+}
+
+/* Efeito nos ícones das redes sociais */
+.sociais img, .estudante-icone {
+    transition: transform 0.2s ease, filter 0.2s ease;
+    cursor: pointer;
+}
+
+.sociais img:hover, .estudante-icone:hover {
+    transform: scale(1.2); /* Aumenta o ícone em 20% */
+    filter: brightness(1.2); /* Deixa o ícone levemente mais brilhante */
+}
