@@ -129,3 +129,40 @@ text-decoration: none;
     filter: brightness(1.2); /* Deixa o ícone levemente mais brilhante */
 }
 
+.secao-musical {
+    background-color: #1a0933; /* Roxo quase preto */
+    padding: 40px 20px;
+}
+.titulo-musica {
+    text-align: center;
+    color: #ff7b00;
+    margin-bottom: 10px;
+}
+.launchpad {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+.pad {
+    width: 100px;
+    height: 100px;
+    background-color: #591a75;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.1s ease;
+    border: 3px solid #ff7b00;
+}
+/* Efeito quando o JavaScript ativa o clique */
+.pad.ativo {
+    background-color: #ff9e00;
+    transform: scale(0.9);
+    box-shadow: 0 0 20px #ff9e00;
+    color: #1a0933;
+}
