@@ -86,9 +86,8 @@ header {
     height: auto;
 }
 
-/* SEÇÃO DO JOGO LAUNCHPAD */
 .secao-musical {
-    background-color: #150529; /* Roxo bem profundo */
+    background-color: #150529; 
     padding: 50px 20px;
     text-align: center;
     border-bottom: 4px solid #ff7b00;
@@ -132,7 +131,7 @@ header {
     border-color: #ff9e00;
 }
 
-/* Estado ativo disparado pelo Clique do JS */
+
 .pad.ativo {
     background-color: #ff9e00;
     transform: scale(0.92);
@@ -140,7 +139,7 @@ header {
     color: #1a0933;
 }
 
-/* SEÇÃO CARDS (ANTIGOS ESTUDANTES) */
+
 .estidante_titulo {
     padding: 40px 0 20px 0;
     text-align: center;
@@ -149,7 +148,7 @@ header {
 }
 
 .estudante {
-    background-color: #ff7b00; /* Fundo Laranja */
+    background-color: #ff7b00; /
     padding: 40px 20px;
     color: #2b1055;
 }
@@ -164,7 +163,7 @@ header {
 }
 
 .estudante-div {
-    background-color: rgba(43, 16, 85, 0.1); /* Sombra sutil de roxo */
+    background-color: rgba(43, 16, 85, 0.1); /
     text-align: center;
     padding: 25px;
     border-radius: 12px;
@@ -172,7 +171,7 @@ header {
     transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s;
 }
 
-/* EFEITO DINÂMICO INTERATIVO DO MOUSE */
+
 .estudante-div:hover {
     transform: translateY(-10px);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
@@ -211,9 +210,9 @@ header {
     transform: scale(1.25);
 }
 
-/* RODAPÉ */
+
 .escola {
-    background-image: linear-gradient(#2b1055, #150529); /* Gradiente Roxo */
+    background-image: linear-gradient(#2b1055, #150529); 
     color: white;
     padding: 40px 20px;
     text-align: center;
@@ -249,9 +248,9 @@ header {
     margin-top: 15px;
 }
 
-/* POP-UP (ESTRUTURA MODAL) */
+
 .popup-oculto {
-    display: none; /* Inicia oculto, JS muda para flex */
+    display: none; 
     position: fixed;
     top: 0;
     left: 0;
@@ -309,7 +308,7 @@ header {
 }
 .video-container {
     position: relative;
-    padding-bottom: 56.25%; /* Proporção 16:9 */
+    padding-bottom: 56.25%; 
     padding-top: 25px;
     height: 0;
     max-width: 100%;
@@ -334,7 +333,7 @@ header {
     transition: transform 0.5s ease;
     cursor: pointer;
 }
-/* Quando passa o mouse, cria uma animação infinita de rotação */
+
 .vinil:hover {
     animation: girarVinil 3s linear infinite;
 }
