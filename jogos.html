@@ -6,7 +6,7 @@
 <h2>Geral</h2>
 
 <ul>
-  <li><a href="#Geral">Home</a></li>
+  <li><a href="index.html">Home</a></li>
   <li><a link="">Não conheço essex gamex</a></li>
 </ul>
 
@@ -48,7 +48,7 @@
         </div>
     </header>
 
-Joje espetacular</h2>
+Java Hunter</h2>
         <p style="color: rgb(78, 3, 121); text-align: center; margin-bottom: 20px;"></p>
 
         <!DOCTYPE html>
@@ -641,5 +641,71 @@ Joje espetacular</h2>
     </script>
 </body>
 </html>
+
+ </section>
+
+    <footer class="escola">
+        <img class="logo_rodape" src="Captura de tela 2026-06-24 215626.png" alt="Logo Rodapé">
+        <h2 class="escola-titulo">Quer falar comigo sobre música ou afins? <a class="link" href="https://www.policiacivil.pr.gov.br/BO"><br>📞 Não dá, pegaram meu celular kkkkkkk</h2>
+        <p>©2026 | Tema: música | Todos os Direitos Reservados pro pavement.</p>
+    </footer>
+
+    <script>
+        // 1. Saudação Baseada no Horário
+        function gerirSaudacao() {
+            const agora = new Date();
+            const hora = agora.getHours();
+            let saudacao = "";
+
+            if (hora >= 5 && hora < 12) {
+                saudacao = "🌅 Bom dia! ninguém quer estudar não.";
+            } else if (hora >= 12 && hora < 18) {
+                saudacao = "☀️ Boa tarde! nem tem sol nessa miséria.";
+            } else {
+                saudacao = "🌙 Boa noite! 2 graus tá na porta fi.";
+            }
+            document.getElementById("saudacao").innerText = saudacao;
+        }
+
+        // Executa ao carregar
+        window.onload = function() {
+            gerirSaudacao();
+            // 2. Temporizador do Pop-up (Aparece após 1.5 segundos)
+            setTimeout(function() {
+                document.getElementById("meuPopup").style.display = "flex";
+            }, 1500);
+        };
+
+        // 3. Função para Fechar o Pop-up
+        function fecharPopup() {
+            document.getElementById("meuPopup").style.display = "none";
+        }
+
+        // 4. Mecânica de clique do Launchpad
+        function tocarPad(elemento) {
+            elemento.classList.add('ativo');
+            setTimeout(() => {
+                elemento.classList.remove('ativo');
+            }, 150);
+        }
+    </script>
+ <section class="secao-video">
+    <h2 class="titulo-musica">📺Música do Dia</h2>
+    
+    <div class="video-container">
+        <!-- URL alterada para o formato /embed/ -->
+        <iframe 
+            src="https://www.youtube.com/embed/lPvhKV3Yg2k" 
+            allowfullscreen>
+        </iframe>
+    </div>
+
+    <div class="vinil-container">
+        <img class="vinil" src="Untitled - 24 de junho de 2026 às 10.30.30.png" alt="Disco de Vinil">
+        <p>Passe o mouse para tocar!</p>
+    </div>
+</section>
+</body></html>
+
 
 </iframe>
