@@ -54,7 +54,595 @@
 Joje espetacular</h2>
         <p style="color: rgb(78, 3, 121); text-align: center; margin-bottom: 20px;"></p>
 
-<iframe src="https://01a13c6f-d100-7099-8f6d-73c7e8556584.arena.site/" 
-        style="width: 100%; height: 100vh; border: none;" 
-        title="Meu Conteúdo">
+        <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mega Man X - Web Game</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #0b0f19;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        .game-container {
+            text-align: center;
+            border: 4px solid #00f0ff;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+            background: #111;
+            position: relative;
+        }
+        canvas {
+            display: block;
+            background: linear-gradient(to bottom, #050b1a, #101c3a);
+        }
+        .ui-panel {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background: #080c14;
+            font-size: 14px;
+            border-top: 2px solid #00f0ff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .controls-hint {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #8ab4f8;
+            line-height: 1.4;
+        }
+        .mobile-controls {
+            display: none;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .mobile-btn {
+            background: rgba(0, 240, 255, 0.2);
+            border: 2px solid #00f0ff;
+            color: #fff;
+            padding: 12px 20px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .mobile-btn:active {
+            background: rgba(0, 240, 255, 0.5);
+        }
+        @media (max-width: 768px) {
+            .mobile-controls {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="game-container">
+        <div class="ui-panel">
+            <span id="scoreText">Placar: 0</span>
+            <span id="healthText">HP: 100/100</span>
+            <span id="bossText" style="color: #ff3333; display:none;">BOSS HP: 200</span>
+        </div>
+        <canvas id="gameCanvas" width="640" height="360"></canvas>
+    </div>
+
+    <div class="controls-hint">
+        <strong>Controles:</strong> Setas / A, D (Mover) | ESPAÇO (Pular) | J (Atirar) | K (Dash)
+    </div>
+
+    <div class="mobile-controls">
+        <button class="mobile-btn" ontouchstart="window.mLeft=true" ontouchend="window.mLeft=false">ESQUERDA</button>
+        <button class="mobile-btn" ontouchstart="window.mRight=true" ontouchend="window.mRight=false">DIREITA</button>
+        <button class="mobile-btn" ontouchstart="window.mJump=true" ontouchend="window.mJump=false">PULAR</button>
+        <button class="mobile-btn" ontouchstart="window.mShoot=true" ontouchend="window.mShoot=false">TIRO</button>
+        <button class="mobile-btn" ontouchstart="window.mDash=true" ontouchend="window.mDash=false">DASH</button>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Áudio Simulado (Web Audio API)
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playSound(type) {
+            if (!audioCtx) return;
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            let now = audioCtx.currentTime;
+            if (type === 'jump') {
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(150, now);
+                osc.frequency.exponentialRampToValueAtTime(300, now + 0.15);
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.linearRampToValueAtTime(0.01, now + 0.15);
+                osc.start(now);
+                osc.stop(now + 0.15);
+            } else if (type === 'shoot') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(600, now);
+                osc.frequency.exponentialRampToValueAtTime(150, now + 0.1);
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.linearRampToValueAtTime(0.01, now + 0.1);
+                osc.start(now);
+                osc.stop(now + 0.1);
+            } else if (type === 'dash') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(300, now);
+                osc.frequency.linearRampToValueAtTime(100, now + 0.2);
+                gain.gain.setValueAtTime(0.15, now);
+                gain.gain.linearRampToValueAtTime(0.01, now + 0.2);
+                osc.start(now);
+                osc.stop(now + 0.2);
+            } else if (type === 'hurt') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(120, now);
+                osc.frequency.setValueAtTime(80, now + 0.1);
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.linearRampToValueAtTime(0.01, now + 0.2);
+                osc.start(now);
+                osc.stop(now + 0.2);
+            }
+        }
+
+        // Variáveis de Jogo
+        let score = 0;
+        let gameState = 'playing'; // playing, gameover, victory
+        let cameraX = 0;
+
+        // Entidade Jogador (Mega X)
+        const player = {
+            x: 50,
+            y: 220,
+            w: 24,
+            h: 32,
+            vx: 0,
+            vy: 0,
+            speed: 3.5,
+            jumpForce: -9,
+            gravity: 0.45,
+            grounded: false,
+            facing: 1, // 1: direita, -1: esquerda
+            hp: 100,
+            maxHp: 100,
+            isDashing: false,
+            dashTimer: 0,
+            dashCooldown: 0,
+            invincible: 0
+        };
+
+        // Teclado
+        const keys = {};
+        window.addEventListener('keydown', e => { keys[e.code] = true; });
+        window.addEventListener('keyup', e => { keys[e.code] = false; });
+
+        // Mundo / Plataformas (Chão contínuo e sólido sem abismos)
+        const platforms = [
+            { x: 0, y: 280, w: 2500, h: 80, color: '#182848' }, // Chão Principal Contínuo
+            { x: 300, y: 210, w: 120, h: 16, color: '#1f3a60' },
+            { x: 500, y: 160, w: 140, h: 16, color: '#1f3a60' },
+            { x: 750, y: 200, w: 160, h: 16, color: '#1f3a60' },
+            { x: 1050, y: 170, w: 150, h: 16, color: '#1f3a60' },
+            { x: 1350, y: 210, w: 180, h: 16, color: '#1f3a60' }
+        ];
+
+        // Inimigos
+        let enemies = [
+            { x: 350, y: 250, w: 24, h: 24, vx: -1, minX: 300, maxX: 400, hp: 15, type: 'walker', color: '#ff4444' },
+            { x: 600, y: 130, w: 24, h: 24, vx: 1, minX: 500, maxX: 640, hp: 15, type: 'walker', color: '#ff4444' },
+            { x: 800, y: 250, w: 24, h: 24, vx: -1.5, minX: 750, maxX: 900, hp: 20, type: 'walker', color: '#ff4444' },
+            { x: 1100, y: 140, w: 24, h: 24, vx: 1.2, minX: 1050, maxX: 1200, hp: 20, type: 'walker', color: '#ff4444' }
+        ];
+
+        // Chefe Final
+        const boss = {
+            x: 1800,
+            y: 220,
+            w: 48,
+            h: 56,
+            vx: 1,
+            hp: 200,
+            maxHp: 200,
+            active: false,
+            attackTimer: 0
+        };
+
+        let bullets = [];
+        let particles = [];
+
+        function shootBullet() {
+            bullets.push({
+                x: player.x + (player.facing > 0 ? player.w : -10),
+                y: player.y + 10,
+                w: 12,
+                h: 6,
+                vx: player.facing * 9,
+                fromPlayer: true
+            });
+            playSound('shoot');
+        }
+
+        function createExplosion(x, y, color = '#00f0ff') {
+            for (let i = 0; i < 8; i++) {
+                particles.push({
+                    x: x,
+                    y: y,
+                    vx: (Math.random() - 0.5) * 6,
+                    vy: (Math.random() - 0.5) * 6,
+                    life: 20,
+                    color: color
+                });
+            }
+        }
+
+        function resetGame() {
+            player.x = 50;
+            player.y = 220;
+            player.vx = 0;
+            player.vy = 0;
+            player.hp = player.maxHp;
+            gameState = 'playing';
+            score = 0;
+            boss.hp = boss.maxHp;
+            boss.active = false;
+            bullets = [];
+            particles = [];
+        }
+
+        // Loop Principal de Atualização
+        function update() {
+            if (gameState !== 'playing') {
+                if (keys['KeyR'] || window.mJump) { resetGame(); window.mJump = false; }
+                return;
+            }
+
+            // Input do Jogador
+            let moveLeft = keys['ArrowLeft'] || keys['KeyA'] || window.mLeft;
+            let moveRight = keys['ArrowRight'] || keys['KeyD'] || window.mRight;
+            let jumpPressed = keys['Space'] || keys['ArrowUp'] || keys['KeyW'] || window.mJump;
+            let shootPressed = keys['KeyJ'] || window.mShoot;
+            let dashPressed = keys['KeyK'] || window.mDash;
+
+            window.mJump = false; // Reset mobile one-shot triggers
+            window.mShoot = false;
+            window.mDash = false;
+
+            // Dash mechanic
+            if (dashPressed && player.dashCooldown <= 0 && !player.isDashing) {
+                player.isDashing = true;
+                player.dashTimer = 15; // duração do dash em frames
+                player.dashCooldown = 45; // tempo de recarga
+                playSound('dash');
+            }
+
+            if (player.dashCooldown > 0) player.dashCooldown--;
+
+            if (player.isDashing) {
+                player.vx = player.facing * 8;
+                player.vy = 0;
+                player.dashTimer--;
+                if (player.dashTimer <= 0) {
+                    player.isDashing = false;
+                }
+            } else {
+                // Movimentação Normal em X
+                if (moveLeft) {
+                    player.vx = -player.speed;
+                    player.facing = -1;
+                } else if (moveRight) {
+                    player.vx = player.speed;
+                    player.facing = 1;
+                } else {
+                    player.vx = 0;
+                }
+
+                // Gravidade e Pulo
+                player.vy += player.gravity;
+                if (jumpPressed && player.grounded) {
+                    player.vy = player.jumpForce;
+                    player.grounded = false;
+                    playSound('jump');
+                }
+            }
+
+            // Disparo
+            if (shootPressed && !player.shootingLock) {
+                shootBullet();
+                player.shootingLock = true;
+                setTimeout(() => { player.shootingLock = false; }, 200);
+            }
+
+            // ---- COLISÃO COM EIXOS SEPARADOS (AABB) ----
+            // 1. Eixo X
+            player.x += player.vx;
+            for (let p of platforms) {
+                if (player.x < p.x + p.w && player.x + player.w > p.x &&
+                    player.y < p.y + p.h && player.y + player.h > p.y) {
+                    if (player.vx > 0) player.x = p.x - player.w;
+                    else if (player.vx < 0) player.x = p.x + p.w;
+                }
+            }
+
+            // 2. Eixo Y
+            player.grounded = false;
+            player.y += player.vy;
+            for (let p of platforms) {
+                if (player.x < p.x + p.w && player.x + player.w > p.x &&
+                    player.y < p.y + p.h && player.y + player.h > p.y) {
+                    if (player.vy > 0) { // Caindo
+                        player.y = p.y - player.h;
+                        player.vy = 0;
+                        player.grounded = true;
+                    } else if (player.vy < 0) { // Subindo
+                        player.y = p.y + p.h;
+                        player.vy = 0;
+                    }
+                }
+            }
+
+            // Limites da fase (esquerda)
+            if (player.x < 0) player.x = 0;
+
+            // Invencibilidade
+            if (player.invincible > 0) player.invincible--;
+
+            // Câmera segue o jogador
+            cameraX = player.x - 150;
+            if (cameraX < 0) cameraX = 0;
+            if (cameraX > 1750) cameraX = 1750;
+
+            // Atualizar Inimigos
+            for (let e of enemies) {
+                e.x += e.vx;
+                if (e.x < e.minX || e.x > e.maxX) e.vx *= -1;
+
+                // Colisão Jogador vs Inimigo
+                if (player.invincible === 0 &&
+                    player.x < e.x + e.w && player.x + player.w > e.x &&
+                    player.y < e.y + e.h && player.y + player.h > e.y) {
+                    player.hp -= 15;
+                    player.invincible = 60;
+                    playSound('hurt');
+                    if (player.hp <= 0) gameState = 'gameover';
+                }
+            }
+
+            // Ativar Chefe se aproximar
+            if (player.x > 1500) boss.active = true;
+
+            // Atualizar Chefe
+            if (boss.active && boss.hp > 0) {
+                boss.x += boss.vx;
+                if (boss.x < 1650 || boss.x > 2100) boss.vx *= -1;
+
+                boss.attackTimer++;
+                if (boss.attackTimer > 90) {
+                    boss.attackTimer = 0;
+                    // Chefe dispara projétil contra o jogador
+                    bullets.push({
+                        x: boss.x,
+                        y: boss.y + 20,
+                        w: 10,
+                        h: 10,
+                        vx: player.x < boss.x ? -4 : 4,
+                        fromPlayer: false
+                    });
+                }
+
+                // Colisão Jogador vs Chefe
+                if (player.invincible === 0 &&
+                    player.x < boss.x + boss.w && player.x + player.w > boss.x &&
+                    player.y < boss.y + boss.h && player.y + player.h > boss.y) {
+                    player.hp -= 25;
+                    player.invincible = 60;
+                    playSound('hurt');
+                    if (player.hp <= 0) gameState = 'gameover';
+                }
+            }
+
+            // Atualizar Tiros
+            for (let i = bullets.length - 1; i >= 0; i--) {
+                let b = bullets[i];
+                b.x += b.vx;
+
+                // Tiro do Jogador acertando Inimigos / Chefe
+                if (b.fromPlayer) {
+                    // Checar Inimigos
+                    for (let j = enemies.length - 1; j >= 0; j--) {
+                        let e = enemies[j];
+                        if (b.x < e.x + e.w && b.x + b.w > e.x && b.y < e.y + e.h && b.y + b.h > e.y) {
+                            e.hp -= 10;
+                            createExplosion(e.x, e.y, '#ff4444');
+                            bullets.splice(i, 1);
+                            if (e.hp <= 0) {
+                                enemies.splice(j, 1);
+                                score += 100;
+                            }
+                            break;
+                        }
+                    }
+                    // Checar Chefe
+                    if (boss.active && boss.hp > 0 &&
+                        b.x < boss.x + boss.w && b.x + b.w > boss.x && b.y < boss.y + boss.h && b.y + b.h > boss.y) {
+                        boss.hp -= 10;
+                        createExplosion(boss.x, boss.y, '#ffcc00');
+                        bullets.splice(i, 1);
+                        if (boss.hp <= 0) {
+                            gameState = 'victory';
+                            score += 1000;
+                        }
+                    }
+                } else {
+                    // Tiro do Chefe acertando o Jogador
+                    if (player.invincible === 0 &&
+                        b.x < player.x + player.w && b.x + b.w > player.x && b.y < player.y + player.h && b.y + b.h > player.y) {
+                        player.hp -= 20;
+                        player.invincible = 60;
+                        playSound('hurt');
+                        bullets.splice(i, 1);
+                        if (player.hp <= 0) gameState = 'gameover';
+                    }
+                }
+
+                // Remover tiros fora da tela
+                if (b.x < cameraX - 50 || b.x > cameraX + canvas.width + 50) {
+                    if (bullets.includes(b)) bullets.splice(i, 1);
+                }
+            }
+
+            // Atualizar Partículas
+            for (let i = particles.length - 1; i >= 0; i--) {
+                let pt = particles[i];
+                pt.x += pt.vx;
+                pt.y += pt.vy;
+                pt.life--;
+                if (pt.life <= 0) particles.splice(i, 1);
+            }
+
+            // Atualizar UI HTML
+            document.getElementById('scoreText').innerText = `Placar: ${score}`;
+            document.getElementById('healthText').innerText = `HP: ${Math.max(0, player.hp)}/${player.maxHp}`;
+            if (boss.active) {
+                let bossEl = document.getElementById('bossText');
+                bossEl.style.display = 'inline';
+                bossEl.innerText = `BOSS HP: ${Math.max(0, boss.hp)}`;
+            }
+        }
+
+        // Loop de Renderização (Desenho Gráfico)
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.save();
+            ctx.translate(-cameraX, 0);
+
+            // Fundo de Grade Estilizado (Grid Neon)
+            ctx.strokeStyle = 'rgba(0, 240, 255, 0.05)';
+            ctx.lineWidth = 1;
+            for (let x = 0; x < 2500; x += 40) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+                ctx.stroke();
+            }
+
+            // Desenhar Plataformas
+            for (let p of platforms) {
+                ctx.fillStyle = p.color;
+                ctx.fillRect(p.x, p.y, p.w, p.h);
+                // Borda brilhante superior
+                ctx.fillStyle = '#00f0ff';
+                ctx.fillRect(p.x, p.y, p.w, 3);
+            }
+
+            // Desenhar Jogador (Mega X Customizado)
+            if (player.invincible % 4 < 2) { // Efeito piscar ao sofrer dano
+                // Corpo / Armadura Azul
+                ctx.fillStyle = player.isDashing ? '#00ffff' : '#00aaff';
+                ctx.fillRect(player.x, player.y + 10, player.w, player.h - 10);
+                
+                // Capacete detalhado
+                ctx.fillStyle = '#0055ff';
+                ctx.fillRect(player.x + (player.facing > 0 ? 4 : 2), player.y, 20, 12);
+                // Gema do capacete
+                ctx.fillStyle = '#00ffff';
+                ctx.fillRect(player.x + (player.facing > 0 ? 10 : 8), player.y + 2, 6, 4);
+
+                // Canhão (Buster) no braço
+                ctx.fillStyle = '#ffcc00';
+                let busterX = player.facing > 0 ? player.x + player.w : player.x - 8;
+                ctx.fillRect(busterX, player.y + 16, 10, 8);
+            }
+
+            // Desenhar Inimigos
+            for (let e of enemies) {
+                ctx.fillStyle = e.color;
+                ctx.fillRect(e.x, e.y, e.w, e.h);
+                ctx.fillStyle = '#fff';
+                ctx.fillRect(e.x + 4, e.y + 6, 4, 4);
+                ctx.fillRect(e.x + 16, e.y + 6, 4, 4);
+            }
+
+            // Desenhar Chefe
+            if (boss.active && boss.hp > 0) {
+                ctx.fillStyle = '#ff3333';
+                ctx.fillRect(boss.x, boss.y, boss.w, boss.h);
+                // Olhos do Chefe
+                ctx.fillStyle = '#ffff00';
+                ctx.fillRect(boss.x + 8, boss.y + 12, 8, 8);
+                ctx.fillRect(boss.x + 32, boss.y + 12, 8, 8);
+            }
+
+            // Desenhar Tiros
+            for (let b of bullets) {
+                ctx.fillStyle = b.fromPlayer ? '#00ffff' : '#ff3333';
+                ctx.fillRect(b.x, b.y, b.w, b.h);
+            }
+
+            // Desenhar Partículas
+            for (let pt of particles) {
+                ctx.fillStyle = pt.color;
+                ctx.fillRect(pt.x, pt.y, 3, 3);
+            }
+
+            ctx.restore();
+
+            // Telas de Fim de Jogo / Vitória (Fixas na tela)
+            if (gameState === 'gameover') {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.85)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#ff3333';
+                ctx.font = 'bold 28px "Courier New", monospace';
+                ctx.textAlign = 'center';
+                ctx.fillText('FIM DE JOGO', canvas.width / 2, canvas.height / 2 - 15);
+                ctx.fillStyle = '#fff';
+                ctx.font = '14px "Courier New", monospace';
+                ctx.fillText('Pressione R para Reiniciar', canvas.width / 2, canvas.height / 2 + 20);
+                ctx.textAlign = 'left';
+            } else if (gameState === 'victory') {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.85)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#00ffff';
+                ctx.font = 'bold 28px "Courier New", monospace';
+                ctx.textAlign = 'center';
+                ctx.fillText('MISSÃO CUMPRIDA!', canvas.width / 2, canvas.height / 2 - 15);
+                ctx.fillStyle = '#fff';
+                ctx.font = '14px "Courier New", monospace';
+                ctx.fillText('Pressione R para Jogar Novamente', canvas.width / 2, canvas.height / 2 + 20);
+                ctx.textAlign = 'left';
+            }
+        }
+
+        // Loop principal
+        function loop() {
+            update();
+            draw();
+            requestAnimationFrame(loop);
+        }
+
+        loop();
+    </script>
+</body>
+</html>
+
 </iframe>
