@@ -342,3 +342,37 @@ header {
     from { transform: rotate(0deg); }
     to { transform: rotate(360deg); }
 }
+
+.menu {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.botao {
+    display: inline-block;
+    padding: 12px 24px;
+    background: linear-gradient(135deg, #ff5900, #511934);
+    color: white;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-weight: bold;
+    border-radius: 12px;
+    border: 2px solid transparent;
+    box-shadow: 0 4px 12px rgba(255, 89, 0, 0.25);
+    transition: all 0.3s ease;
+}
+
+.botao:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 200, 255, 0.5);
+    background: linear-gradient(135deg, #ff5900, #511934);
+}
+
+.botao:active {
+    transform: scale(0.95);
+}
