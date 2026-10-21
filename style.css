@@ -367,12 +367,21 @@ header {
     transition: all 0.3s ease;
 }
 
-.botao:hover {
+.penbol:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 20px rgba(0, 200, 255, 0.5);
     background: linear-gradient(135deg, #ff5900, #511934);
 }
 
-.botao:active {
+.penbol:active {
     transform: scale(0.95);
+}
+
+
+.menu {
+    display: flex;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
