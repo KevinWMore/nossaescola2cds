@@ -644,45 +644,8 @@ Java Hunter</h2>
         <p>©2026 | Tema: música | Todos os Direitos Reservados pro pavement.</p>
     </footer>
 
-    <script>
-        // 1. Saudação Baseada no Horário
-        function gerirSaudacao() {
-            const agora = new Date();
-            const hora = agora.getHours();
-            let saudacao = "";
+</section>
 
-            if (hora >= 5 && hora < 12) {
-                saudacao = "🌅 Bom dia! ninguém quer estudar não.";
-            } else if (hora >= 12 && hora < 18) {
-                saudacao = "☀️ Boa tarde! nem tem sol nessa miséria.";
-            } else {
-                saudacao = "🌙 Boa noite! 2 graus tá na porta fi.";
-            }
-            document.getElementById("saudacao").innerText = saudacao;
-        }
-
-        // Executa ao carregar
-        window.onload = function() {
-            gerirSaudacao();
-            // 2. Temporizador do Pop-up (Aparece após 1.5 segundos)
-            setTimeout(function() {
-                document.getElementById("meuPopup").style.display = "flex";
-            }, 1500);
-        };
-
-        // 3. Função para Fechar o Pop-up
-        function fecharPopup() {
-            document.getElementById("meuPopup").style.display = "none";
-        }
-
-        // 4. Mecânica de clique do Launchpad
-        function tocarPad(elemento) {
-            elemento.classList.add('ativo');
-            setTimeout(() => {
-                elemento.classList.remove('ativo');
-            }, 150);
-        }
-    </script>
  <section class="secao-video">
     <h2 class="titulo-musica">📺Música do Dia</h2>
     
