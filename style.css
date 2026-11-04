@@ -148,7 +148,7 @@ header {
 }
 
 .estudante {
-    background-color: #ff7b00; /
+    background-color: #ff7b00;
     padding: 40px 20px;
     color: #2b1055;
 }
@@ -163,13 +163,16 @@ header {
 }
 
 .estudante-div {
-    background-color: rgba(43, 16, 85, 0.1); /
+    background-color: rgba(43, 16, 85, 0.1);
     text-align: center;
     padding: 25px;
     border-radius: 12px;
     width: 280px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s;
+    transition: transform 0.3s ease,
+                box-shadow 0.3s ease,
+                background-color 0.3s;
 }
+
 
 
 .estudante-div:hover {
