@@ -380,3 +380,14 @@ header {
     transform: scale(0.95);
 }
 
+ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 0;
+}
+
+ul li {
+    display: inline-block;
+}
